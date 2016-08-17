@@ -116,6 +116,9 @@ void MainWindow::rotateBtnClicked()
 {
     // Floating point values may fluctuate; always compare using integers
 
+    if(image==0||image->isNull())
+        return;
+
     int enteredDegValue=ui->degBox->value()%360;
     currentDegs+=enteredDegValue;
 
@@ -124,12 +127,19 @@ void MainWindow::rotateBtnClicked()
 
 void MainWindow::rotate45DegLeftBtnClicked()
 {
+    if(image==0||image->isNull())
+        return;
+
     currentDegs-=45;
     rotateImage();
 }
 
 void MainWindow::rotate45DegRightBtnClicked()
 {
+
+    if(image==0||image->isNull())
+        return;
+
     currentDegs+=45;
     rotateImage();
 }
