@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(dialog,SIGNAL(fileSelected(QString)),this,SLOT(dialogFileSelected(QString)));
     connect(ui->browseBtn,SIGNAL(clicked(bool)),this,SLOT(browseBtnClicked()));
     connect(ui->loadBtn,SIGNAL(clicked(bool)),this,SLOT(loadBtnClicked()));
+    connect(ui->saveAsBtn,SIGNAL(clicked(bool)),this,SLOT(saveAsBtnClicked()));
     connect(ui->fitToWindowBtn,SIGNAL(clicked(bool)),this,SLOT(fitToWindow()));
     connect(ui->resetZoomBtn,SIGNAL(clicked(bool)),this,SLOT(resetZoom()));
     image=0;
@@ -83,6 +84,16 @@ void MainWindow::loadBtnClicked()
     pixmapItem->setPixmap(QPixmap::fromImage(*image));
     ui->graphicsView->viewport()->update();
     fitToWindow();
+}
+
+void MainWindow::saveAsBtnClicked()
+{
+    if(currentNonRotatedImageData==0)
+        return;
+    QString path=QFileDialog::getSaveFileName(this,"Save as...",QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),"JPG image (*.jpg);;PNG image (*.png);;GIF image (*.gif);;Bitmap (*.bmp)");
+    if(path=="")
+        return;
+    image->save(path,0,100);
 }
 
 void MainWindow::fitToWindow()
