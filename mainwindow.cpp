@@ -110,6 +110,7 @@ void MainWindow::resetZoom()
 void MainWindow::dialogFileSelected(QString path)
 {
     ui->pathBox->setText(path);
+    ui->loadBtn->click();
 }
 
 void MainWindow::rotateBtnClicked()
@@ -431,8 +432,8 @@ void MainWindow::rotateImage()
                     rOrigX=round(origX);
                     rOrigY=round(origY);
 
-                    fOrigX=floor(origX);
-                    fOrigY=floor(origY);
+                    fOrigX=floor(__max(origX,0.0f));
+                    fOrigY=floor(__max(origY,0.0f));
                     cOrigX=ceil(origX);
                     cOrigY=ceil(origY);
 
@@ -450,7 +451,7 @@ void MainWindow::rotateImage()
                         c00=currentNonRotatedImageData[fOrigY*originalImageWidth+fOrigX];
                         c10=currentNonRotatedImageData[fOrigY*originalImageWidth+(cOrigX>xLim?fOrigX:cOrigX)];
                         c01=(cOrigY>yLim?c00:currentNonRotatedImageData[(cOrigY)*originalImageWidth+fOrigX]);
-                        c11=(cOrigY>yLim?c10:(cOrigX>xLim?currentNonRotatedImageData[(cOrigY)*originalImageWidth+fOrigX]:originalImageData[(cOrigY)*originalImageWidth+(cOrigX)]));
+                        c11=(cOrigY>yLim?c10:(cOrigX>xLim?currentNonRotatedImageData[(cOrigY)*originalImageWidth+fOrigX]:currentNonRotatedImageData[(cOrigY)*originalImageWidth+(cOrigX)]));
                     }
                     else
                     {
